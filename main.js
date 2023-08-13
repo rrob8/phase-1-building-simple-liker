@@ -2,7 +2,33 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+//X hide the error message by default (HTML file)
+hearts = document.getElementsByClassName("like-glyph")
+
+for (glyph of hearts) {
+  
+glyph.addEventListener('click', (event) => { //add event listener to the nodes
+ span = event.target
+ if (span.innerHTML == EMPTY_HEART) {
+  mimicServerCall()  
+  .then((response)=> {
+    // if (response=="Pretend remote server notified of action!"){
+      span.innerHTML = FULL_HEART
+      span.className = "activated-heart"
+  // }
+  })
+  .catch((error)=> {       // this works up to here
+     const modal = document.querySelector('#modal')
+     modal.className =''
+     setTimeout(x => modal.className ='hidden', 3000)
+      })
+ } else {
+  span.innerHTML = EMPTY_HEART
+  span.className = 'like-glyph'
+ }
+ 
+})
+}
 
 
 
@@ -23,3 +49,4 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     }, 300);
   });
 }
+
